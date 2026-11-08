@@ -7,7 +7,8 @@ const router = require('./routes/clipboard.route')
 const port = 3000
 
 app.use(cors([
-  'https://clipboard.github.io'
+  'http://localhost:5173/',
+  'https://officialpurpled.github.io/'
 ]))
 
 app.get('/', (req, res) => {
@@ -15,6 +16,10 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/v1', router)
+
+app.use('', (req, res) => {
+  res.json('hello, comot for here')
+})
 
 app.listen(port, () => {
   console.log('Sever is active on port', port, 'http://localhost:3000')
