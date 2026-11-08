@@ -1,10 +1,12 @@
+require('dotenv').config()
+
 const express = require('express')
 
 const app = express()
 const cors = require('cors');
 
 const router = require('./routes/clipboard.route')
-const port = 3000
+const port = process.env.PORT
 
 app.use(cors([
   'http://localhost:5173/',
@@ -22,5 +24,5 @@ app.use('', (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log('Sever is active on port', port, 'http://localhost:3000')
+  console.log('Sever is active on port', port, ', Link: http://localhost:3000')
 })
