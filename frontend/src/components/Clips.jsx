@@ -1,7 +1,7 @@
-const Clips = () => {
+const Clips = ({clip}) => {
   return (
-    <div className="clips-container">
-      Hello Clips
+    <div className="clip-item">
+      {clip}
     </div>
   )
 }
