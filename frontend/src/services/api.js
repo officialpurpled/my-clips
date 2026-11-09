@@ -1,14 +1,25 @@
-const BASE URI = "http://localhost:3000/api/v1"
+const BASE_URI = "http://localhost:3000/api/v1"
 
-const getAllClips = async () => {
+export const getAllClips = async () => {
   try {
+    const response = await fetch(`${BASE_URI}/get-clips`)
+
+    if (!response.ok) {
+      throw new Error('Response Err')
+    }
+
+    const data = await response.json()
+
+    return data.clips
+
   } catch (error) {
+    console.log(error.message)
   }
 }
 
-const updateClips = async (newClip) => {
-  try {
-  } catch (error) {
-  }
-}
+// export const updateClips = async (newClip) => {
+//   try {
+//   } catch (error) {
+//   }
+// }
 
