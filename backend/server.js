@@ -1,23 +1,25 @@
 require('dotenv').config()
 
 const express = require('express')
-
-const app = express()
 const cors = require('cors');
 
-const router = require('./routes/clipboard.route')
 const port = process.env.PORT
+
+const app = express()
 
 app.use(cors([
   'http://localhost:5173/',
-  'https://officialpurpled.github.io/'
+  'https://officialpurpled.github.io/',
+  'https://my-clips-bv0b.onrender.com/'
 ]))
+
+app.use(express.json());
 
 app.get('/', (req, res) => {
   res.json('Hello world, Welcome to my clipboard')
 })
 
-app.use('/api/v1', router)
+app.use('/api/v1', require('./routes/clipboard.route'))
 
 app.use('', (req, res) => {
   res.json('hello, comot for here')

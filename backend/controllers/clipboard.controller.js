@@ -18,8 +18,9 @@ const getClips = async (req, res) => {
 
 const updateClips = (req, res) => {
   try {
-    const newClip = req.body
-    if (newClip.slice() === '') {
+    const { newClip } = req.body
+
+    if (!newClip) {
       return res.status(404).json({
         status: 'failed',
         message: 'No Changes Occured'
