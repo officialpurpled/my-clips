@@ -1,8 +1,9 @@
-const BASE_URI = "http://localhost:3000/api/v1"
+// const BASE_URI = "http://localhost:3000/api/v1"
+const PRODUCTION_URI = "https://my-clips-backend.onrender.com/api/v1"
 
 export const getAllClips = async () => {
   try {
-    const response = await fetch(`${BASE_URI}/get-clips`)
+    const response = await fetch(`${PRODUCTION_URI}/get-clips`)
 
     if (!response.ok) {
       throw new Error('Response Err')
@@ -25,7 +26,7 @@ export const updateClips = async (newClip) => {
 
     const formatedClip = newClip.trim()
 
-    const response = await fetch(`${BASE_URI}/update-clips`, {
+    const response = await fetch(`${PRODUCTION_URI}/update-clips`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
