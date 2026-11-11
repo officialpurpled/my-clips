@@ -17,9 +17,31 @@ export const getAllClips = async () => {
   }
 }
 
-// export const updateClips = async (newClip) => {
-//   try {
-//   } catch (error) {
-//   }
-// }
+export const updateClips = async (newClip) => {
+  try {
+    if (newClip.trim() === "") {
+      throw new Error('Input a value')
+    }
+
+    const formatedClip = newClip.trim()
+
+    const response = await fetch(`${BASE_URI}/update-clips`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ newClip: formatedClip })
+    })
+
+    if (!response.ok) {
+      throw new Error('Response Err')
+    }
+
+    const data = await response.json()
+
+    return data.clips
+  } catch (error) {
+    console.log('Error:', error.message)
+  }
+}
 

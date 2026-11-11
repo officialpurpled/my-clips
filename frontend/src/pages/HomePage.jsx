@@ -3,9 +3,9 @@ import { useEffect, useState } from "react"
 import Clips from "../components/Clips"
 import Navbar from "../components/NavBar"
 
-import { getAllClips } from "../services/api"
+import { getAllClips, updateClips } from "../services/api"
 
-const clipArr = ['hell0', 'hell1', 'hell2', 'hell3', 'hell4']
+const clipArr = ['Error fetching clips from clipboard']
 
 const HomePage = () => {
   const [input, setInput] = useState('')
@@ -26,10 +26,17 @@ const HomePage = () => {
     setClips([...clips, ...fetchClip])
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
-    setClips([...clips, input])
+    const newClips = await updateClips(input)
+
+    if (!newClips || newClips.length === 0) {
+      console.log('err to update')
+      return
+    }
+
+    setClips([...newClips])
     setInput('')
   }
 
