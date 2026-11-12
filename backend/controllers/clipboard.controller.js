@@ -1,4 +1,4 @@
-const { clips } = require('../config/mockDB')
+let { clips } = require('../config/mockDB')
 
 const getClips = async (req, res) => {
   try {
@@ -16,7 +16,7 @@ const getClips = async (req, res) => {
   }
 }
 
-const updateClips = (req, res) => {
+const addClip = (req, res) => {
   try {
     const { newClip } = req.body
 
@@ -44,7 +44,38 @@ const updateClips = (req, res) => {
   }
 }
 
+const deleteClip = (req, res) => {
+  try {
+    const clip = req.params.id
+
+    if (!clip) {
+      return res.status(404).json({
+        status: 'failed',
+        message: 'No Changes Occured'
+      })
+    }
+    const indexNum = Number(req.params.id)
+
+    const newArr = clips.filter((clip, ind) => ind !== indexNum)
+    clips = newArr
+
+    return res.status(200).json({
+      status: 'success',
+      message: 'Deleted successfully',
+      clips: clips
+    })
+
+  } catch (error) {
+    res.status(500).json({
+      status: 'failed',
+      error: error.message,
+      message: 'Unexpected error, please refresh'
+    })
+  }
+}
+
 module.exports = {
   getClips,
-  updateClips
+  addClip,
+  deleteClip
 }

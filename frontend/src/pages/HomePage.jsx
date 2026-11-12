@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import Clips from "../components/Clips"
 import Navbar from "../components/NavBar"
 
-import { getAllClips, updateClips } from "../services/api"
+import { getAllClips, addNewClip, deleteClip } from "../services/api"
 
 const clipArr = ['Error fetching clips from clipboard']
 
@@ -14,6 +14,12 @@ const HomePage = () => {
   useEffect(() => {
     loadClips()
   }, [])
+
+  const handleDelete = async (key) => {
+    const newClips = await deleteClip(key)
+
+    setClips([...newClips])
+  }
 
   const loadClips = async () => {
     const fetchClip = await getAllClips()
@@ -29,10 +35,10 @@ const HomePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const newClips = await updateClips(input)
+    const newClips = await addNewClip(input)
 
     if (!newClips || newClips.length === 0) {
-      console.log('err to update')
+      console.log('err to add')
       return
     }
 
@@ -45,7 +51,7 @@ const HomePage = () => {
       <Navbar />
       <main>
         <div className="clip-container">
-          {clips.map((clip, index) => <Clips key={index} clip={clip} />)}
+          {clips.map((clip, index) => <Clips key={index} clip={clip} index={index} handleDelete={handleDelete} />)}
         </div>
 
         <form onSubmit={handleSubmit}>
