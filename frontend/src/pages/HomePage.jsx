@@ -25,11 +25,11 @@ const HomePage = () => {
     const fetchClip = await getAllClips()
 
     if (!fetchClip) {
-      setClips([...clips, ...clipArr])
+      setClips([...clipArr])
     }
 
     console.log(fetchClip)
-    setClips([...clips, ...fetchClip])
+    setClips([...fetchClip])
   }
 
   const handleSubmit = async (e) => {
@@ -45,6 +45,23 @@ const HomePage = () => {
     setClips([...newClips])
     setInput('')
   }
+
+  const clipboardPaste = async (e) => {
+    e.preventDefault()
+    try {
+      const text = await navigator.clipboard.readText();
+      setInput(input + text);
+
+    } catch (err) {
+      // Fallback for older browsers that only support execCommand
+      const textarea = document.createElement("textarea");
+      document.body.appendChild(textarea);
+      textarea.focus();
+      document.execCommand("paste");
+      setInput(input + textarea.value);
+      console.log("Clipboard paste failed. Using fallback method.", err);;
+    }
+  };
 
   return (
     <>
@@ -73,7 +90,7 @@ const HomePage = () => {
               // console.log(e.target.value)
             }}
           />
-          <button title="paste"> PASTE </button>
+          <button title="paste" onClick={clipboardPaste}> PASTE </button>
           <button title="send" type="submit"> UPLOAD </button>
         </form>
       </main>
